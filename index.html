@@ -3,88 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deteksi Google Chrome di Android</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 20px;
-        }
-        #userAgentDisplay {
-            font-size: 14px;
-            color: #333;
-            background-color: #f0f0f0;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            margin-top: 20px;
-            word-wrap: break-word;
-            width: 80%;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        #copyButton {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-        #copyButton:hover {
-            background-color: #45a049;
-        }
-    </style>
-</head>
-<body>
-    <h1>Deteksi Penggunaan Google Chrome di Android</h1>
-    <p>Halaman ini akan menampilkan **User-Agent** Anda saat ini dan memberikan tombol untuk menyalinnya.</p>
-    <p>Jika Anda menggunakan **Google Chrome** di Android, kami akan memberikan pesan khusus.</p>
-
-    <!-- Display User-Agent -->
-    <div id="userAgentDisplay"></div>
-
-    <!-- Copy Button -->
-    <button id="copyButton" onclick="copyUserAgent()">Salin User-Agent</button>
-
+    <title>Redirect ke Custom Link</title>
     <script>
-        // Mendapatkan User-Agent
-        var userAgent = navigator.userAgent;
-
-        // Menampilkan User-Agent di dalam div
-        document.getElementById("userAgentDisplay").innerText = userAgent;
-
-        // Fungsi untuk menyalin User-Agent ke clipboard
-        function copyUserAgent() {
-            // Buat elemen input sementara untuk menyalin teks
-            var tempInput = document.createElement("input");
-            tempInput.value = userAgent;
-            document.body.appendChild(tempInput);
-
-            // Pilih dan salin teks dari elemen input
-            tempInput.select();
-            document.execCommand("copy");
-
-            // Hapus elemen input setelah menyalin
-            document.body.removeChild(tempInput);
-
-            // Memberikan notifikasi setelah berhasil menyalin
-            alert("User-Agent telah disalin ke clipboard!");
-        }
-
-        // Fungsi untuk mendeteksi penggunaan Google Chrome di Android
-        function detectChrome() {
-            if (userAgent.indexOf("Chrome") !== -1 && userAgent.indexOf("Android") !== -1) {
-                alert("Anda menggunakan **Google Chrome** di perangkat Android!");
+        // Fungsi untuk mendeteksi user-agent
+        function detectUserAgent() {
+            var userAgent = navigator.userAgent.toLowerCase();
+            // Cek apakah user-agent mengandung nama aplikasi tertentu
+            if (userAgent.indexOf("exambro") !== -1 && userAgent.indexOf("exam browser") !== -1) {
+                // Jika benar, redirect ke URL
+                window.location.href = "https://smp2pajangan.github.io/customlink";
             } else {
-                alert("Anda tidak menggunakan Google Chrome di Android.");
+                // Jika bukan, tampilkan pesan akses ditolak
+                document.getElementById("message").innerHTML = "Akses ditolak. Halaman ini hanya dapat diakses menggunakan Exambro Exam Browser.";
             }
         }
-
-        // Panggil fungsi untuk mendeteksi penggunaan Google Chrome
-        detectChrome();
+        
+        // Panggil fungsi saat halaman dimuat
+        window.onload = detectUserAgent;
     </script>
+</head>
+<body>
+    <div id="message" style="text-align: center; padding: 50px; font-size: 20px; color: red;"></div>
 </body>
 </html>
