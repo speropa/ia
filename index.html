@@ -3,26 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirect ke Exambro</title>
-    <script>
-        // Fungsi untuk mengecek apakah halaman dibuka di dalam aplikasi Exambro
-        function checkIfExambro() {
-            var userAgent = navigator.userAgent.toLowerCase();  // Ambil User-Agent dari browser
-            var params = new URLSearchParams(window.location.search);  // Ambil parameter URL
+    <title>Salin User-Agent</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        #userAgentDisplay {
+            font-size: 14px;
+            color: #333;
+            background-color: #f0f0f0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-top: 20px;
+            word-wrap: break-word;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        #copyButton {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        #copyButton:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Deteksi User-Agent</h1>
+    <p>Halaman ini akan menampilkan User-Agent Anda saat ini dan memberikan tombol untuk menyalinnya.</p>
 
-            // Cek jika User-Agent milik Exambro atau ada parameter "source=exambro" di URL
-            if (userAgent.indexOf("exambro") !== -1 || (params.has("source") && params.get("source") === "exambro")) {
-                // Jika aplikasi Exambro ditemukan, lanjutkan redirect ke URL yang diinginkan
-                window.location.href = "https://smp2pajangan.github.io/customlink";  // Redirect ke halaman tujuan
-            } else {
-                // Jika tidak ditemukan, tampilkan pesan akses diblokir
-                document.getElementById("message").innerHTML = "Akses diblokir! Halaman ini hanya bisa diakses dengan aplikasi Exambro.";
-            }
+    <!-- Display User-Agent -->
+    <div id="userAgentDisplay"></div>
+
+    <!-- Copy Button -->
+    <button id="copyButton" onclick="copyUserAgent()">Salin User-Agent</button>
+
+    <script>
+        // Mendapatkan User-Agent
+        var userAgent = navigator.userAgent;
+
+        // Menampilkan User-Agent di dalam div
+        document.getElementById("userAgentDisplay").innerText = userAgent;
+
+        // Fungsi untuk menyalin User-Agent ke clipboard
+        function copyUserAgent() {
+            // Buat elemen input sementara untuk menyalin teks
+            var tempInput = document.createElement("input");
+            tempInput.value = userAgent;
+            document.body.appendChild(tempInput);
+
+            // Pilih dan salin teks dari elemen input
+            tempInput.select();
+            document.execCommand("copy");
+
+            // Hapus elemen input setelah menyalin
+            document.body.removeChild(tempInput);
+
+            // Memberikan notifikasi setelah berhasil menyalin
+            alert("User-Agent telah disalin ke clipboard!");
         }
     </script>
-</head>
-<body onload="checkIfExambro()">
-    <h1>Menunggu Redirect...</h1>
-    <p id="message">Sedang memeriksa aplikasi yang digunakan...</p>
 </body>
 </html>
