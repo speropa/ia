@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deteksi Browser Android</title>
+    <title>Deteksi Google Chrome di Android</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -39,9 +39,9 @@
     </style>
 </head>
 <body>
-    <h1>Deteksi Browser Android</h1>
+    <h1>Deteksi Penggunaan Google Chrome di Android</h1>
     <p>Halaman ini akan menampilkan **User-Agent** Anda saat ini dan memberikan tombol untuk menyalinnya.</p>
-    <p>Jika Anda mengakses melalui **Chrome**, **Firefox**, atau browser lain di Android, halaman ini akan memberikan pesan terkait browser yang digunakan.</p>
+    <p>Jika Anda menggunakan **Google Chrome** di Android, kami akan memberikan pesan khusus.</p>
 
     <!-- Display User-Agent -->
     <div id="userAgentDisplay"></div>
@@ -74,25 +74,17 @@
             alert("User-Agent telah disalin ke clipboard!");
         }
 
-        // Fungsi untuk mendeteksi browser Android
-        function detectBrowser() {
-            if (userAgent.indexOf("Chrome") !== -1) {
-                if (userAgent.indexOf("Edg") !== -1) {
-                    alert("Browser yang Anda gunakan adalah **Microsoft Edge** di Android.");
-                } else {
-                    alert("Browser yang Anda gunakan adalah **Google Chrome** di Android.");
-                }
-            } else if (userAgent.indexOf("Firefox") !== -1) {
-                alert("Browser yang Anda gunakan adalah **Mozilla Firefox** di Android.");
-            } else if (userAgent.indexOf("Safari") !== -1) {
-                alert("Browser yang Anda gunakan adalah **Safari** di Android.");
+        // Fungsi untuk mendeteksi penggunaan Google Chrome di Android
+        function detectChrome() {
+            if (userAgent.indexOf("Chrome") !== -1 && userAgent.indexOf("Android") !== -1) {
+                alert("Anda menggunakan **Google Chrome** di perangkat Android!");
             } else {
-                alert("Browser yang Anda gunakan tidak terdeteksi sebagai Chrome, Firefox, atau Safari.");
+                alert("Anda tidak menggunakan Google Chrome di Android.");
             }
         }
 
-        // Panggil fungsi untuk mendeteksi browser Android
-        detectBrowser();
+        // Panggil fungsi untuk mendeteksi penggunaan Google Chrome
+        detectChrome();
     </script>
 </body>
 </html>
