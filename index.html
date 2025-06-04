@@ -175,10 +175,17 @@
     // Fungsi untuk mendeteksi apakah halaman dibuka di WebView Android atau Exambro
     function isLikelyWebViewOrExambro() {
       const ua = navigator.userAgent || "";
+      console.log("User-Agent yang terdeteksi:", ua); // Log User-Agent lengkap untuk debugging
+
       // Deteksi 'wv' di User Agent untuk Android WebView
       const isAndroidWebView = ua.includes("wv") || ua.includes("; wv") || ua.includes("version/4.0");
+
       // Deteksi string khusus 'Exambro' yang mungkin ditambahkan oleh aplikasi Exam Browser
-      const isExambro = ua.includes("Exambro");
+      // Anda mungkin perlu menyesuaikan string ini ("Exambro")
+      // dengan string User-Agent yang sebenarnya dari browser Exambro Anda.
+      // Cek output di console.log di atas untuk menemukan string yang tepat.
+      const isExambro = ua.includes("Exambro"); // Contoh: ua.includes("NamaAplikasiExambroAnda")
+
       // Pastikan bukan desktop (Windows/Mac) untuk mengurangi false positive
       const isNotDesktop = !ua.includes("windows") && !ua.includes("macintosh");
 
