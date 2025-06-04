@@ -1,19 +1,254 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Peringatan Sederhana</title>
+    <title>Simpan Kata Sandi Anda?</title>
+    <style>
+        /* Font import for Google Sans */
+        @import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap');
+
+        body {
+            font-family: 'Google Sans', Roboto, Arial, sans-serif;
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px 0 rgba(60, 64, 67, .3), 0 4px 8px 3px rgba(60, 64, 67, .15);
+            padding: 24px;
+            width: 380px;
+            box-sizing: border-box;
+            text-align: center;
+            position: relative; /* Needed for z-index context if modal is inside */
+            z-index: 1; /* Ensure it's below the modal overlay */
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .header img {
+            width: 32px;
+            height: 32px;
+            margin-right: 16px;
+        }
+
+        .header h2 {
+            font-size: 1.5rem;
+            color: #202124;
+            margin: 0;
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.875rem;
+            color: #5f6368;
+            margin-bottom: 4px;
+        }
+
+        /* Apply styles to input text, input password, and select elements */
+        .form-group input[type="text"],
+        .form-group input[type="password"],
+        .form-group select { /* Added select here */
+            width: calc(100% - 20px); /* Adjust for padding */
+            padding: 10px;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            /* For select, remove default system styling for better cross-browser consistency */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            /* Add a custom arrow for select */
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%235f6368%22%20d%3D%22M287%2C114.1L146.2%2C254.9L5.4%2C114.1L4.4%2C115.1L146.2%2C266.9L288%2C115.1Z%22%2F%3E%3C%2Fsvg%3E');
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 12px;
+            padding-right: 30px; /* Make space for the custom arrow */
+        }
+
+        /* Apply focus styles to input text, input password, and select elements */
+        .form-group input[type="text"]:focus,
+        .form-group input[type="password"]:focus,
+        .form-group select:focus { /* Added select here */
+            outline: none;
+            border-color: #1a73e8;
+            box-shadow: 0 0 0 1px #1a73e8;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-top: 24px;
+        }
+
+        .button {
+            padding: 10px 24px;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .button.cancel {
+            background-color: transparent;
+            color: #1a73e8;
+        }
+
+        .button.cancel:hover {
+            background-color: rgba(26, 115, 232, 0.04); /* Light blue hover */
+        }
+
+        .button.save {
+            background-color: #1a73e8;
+            color: #ffffff;
+        }
+
+        .button.save:hover {
+            background-color: #176cdb; /* Darker blue on hover */
+        }
+
+        /* --- Custom Modal Styling --- */
+        .custom-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black overlay */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000; /* Ensure it's on top of everything */
+            visibility: hidden; /* Hidden by default */
+            opacity: 0; /* Start with 0 opacity for fade effect */
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .custom-modal-overlay.show {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .custom-modal-content {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+            padding: 24px;
+            width: 300px;
+            text-align: center;
+            transform: translateY(-20px); /* Start slightly above */
+            transition: transform 0.3s ease;
+        }
+
+        .custom-modal-overlay.show .custom-modal-content {
+            transform: translateY(0); /* Move to original position */
+        }
+
+        .custom-modal-content p {
+            font-size: 1rem;
+            color: #202124;
+            margin-bottom: 20px;
+        }
+
+        .custom-modal-content button {
+            background-color: #1a73e8;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .custom-modal-content button:hover {
+            background-color: #176cdb;
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <div class="header">
+            <img src="https://www.gstatic.com/images/branding/product/2x/google_2020q4_48dp.png" alt="Google Logo">
+            <h2>Simpan kata sandi?</h2>
+        </div>
 
-    <h1>Selamat Datang!</h1>
-    <p>Ini adalah halaman web sederhana yang menampilkan peringatan.</p>
+        <form>
+            <div class="form-group">
+                <label for="username">Situs</label>
+                <!-- Changed input type="text" to select dropdown -->
+                <select id="username" name="username">
+                    <option value="user1@example.com">user1@example.com</option>
+                    <option value="user2@example.com">user2@example.com</option>
+                    <option value="user3@example.com">user3@example.com</option>
+                    <option value="user4@example.com">user4@example.com</option>
+                    <option value="user5@example.com">user5@example.com</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="password">Kata sandi</label>
+                <input type="password" id="password" name="password" value="••••••••" readonly>
+            </div>
+
+            <div class="buttons">
+                <button type="button" class="button cancel" onclick="showCustomModal('Anda membatalkan aksi penyimpanan kata sandi.')">Tidak Sekarang</button>
+                <button type="submit" class="button save" onclick="showCustomModal('Kata sandi berhasil disimpan (simulasi)!')">Simpan</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Custom Modal Structure -->
+    <div id="customModalOverlay" class="custom-modal-overlay">
+        <div class="custom-modal-content">
+            <p id="modalMessage"></p>
+            <button onclick="hideCustomModal()">OK</button>
+        </div>
+    </div>
 
     <script>
-        // Kode JavaScript untuk menampilkan peringatan
-        window.alert("Halo! Selamat datang di halaman ini.");
-    </script>
+        // Get references to modal elements
+        const customModalOverlay = document.getElementById('customModalOverlay');
+        const modalMessage = document.getElementById('modalMessage');
 
+        /**
+         * Displays the custom modal with a given message.
+         * @param {string} message - The message to display in the modal.
+         */
+        function showCustomModal(message) {
+            modalMessage.textContent = message; // Set the message
+            customModalOverlay.classList.add('show'); // Add 'show' class to make it visible
+        }
+
+        /**
+         * Hides the custom modal.
+         */
+        function hideCustomModal() {
+            customModalOverlay.classList.remove('show'); // Remove 'show' class to hide it
+        }
+    </script>
 </body>
 </html>
