@@ -3,116 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Akses Halaman Ujian</title>
-    <!-- Memuat Tailwind CSS untuk styling -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <style>
-        /* Gaya kustom untuk memastikan tampilan responsif dan estetis */
-        body {
-            font-family: 'Inter', sans-serif; /* Menggunakan font Inter */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh; /* Memastikan body mengisi seluruh tinggi viewport */
-            margin: 0;
-            background-color: #f8d7da; /* Warna latar belakang merah muda untuk pesan diblokir */
-            color: #721c24; /* Warna teks merah gelap */
-            text-align: center;
-            padding: 1rem; /* Padding agar tidak terlalu mepet di layar kecil */
-        }
-        .container {
-            border: 1px solid #f5c6cb; /* Border merah muda */
-            padding: 2.5rem; /* Padding internal */
-            border-radius: 0.5rem; /* Sudut membulat */
-            background-color: #fdd; /* Latar belakang merah sangat muda */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Bayangan lembut */
-            max-width: 90%; /* Lebar responsif */
-            width: 500px; /* Lebar maksimum untuk desktop */
-            transition: all 0.3s ease-in-out; /* Transisi halus untuk perubahan warna */
-        }
-        h1 {
-            color: #721c24; /* Warna merah gelap untuk judul */
-            margin-bottom: 1.25rem; /* Margin bawah */
-            font-size: 2.25rem; /* Ukuran font besar */
-            font-weight: bold;
-        }
-        p {
-            font-size: 1.125rem; /* Ukuran font paragraf */
-            margin-bottom: 1rem; /* Margin bawah */
-        }
-        /* Gaya khusus untuk pesan pengalihan */
-        .container.redirect-message {
-            background-color: #d4edda; /* Latar belakang hijau muda */
-            border-color: #c3e6cb; /* Border hijau muda */
-            color: #155724; /* Teks hijau gelap */
-        }
-        .container.redirect-message h1 {
-            color: #155724; /* Judul hijau gelap */
-        }
-        .container.redirect-message a {
-            color: #007bff; /* Tautan biru */
-            text-decoration: underline;
-        }
-    </style>
-</head>
-<body>
-
-    <div id="content" class="hidden">
-        <!-- Konten akan dimuat di sini oleh JavaScript -->
-    </div>
-
+    <title>Redirect ke Exambro</title>
     <script>
-        // Fungsi untuk menampilkan pesan "Akses Diblokir"
-        function showBlockedMessage() {
-            const contentDiv = document.getElementById('content');
-            contentDiv.innerHTML = `
-                <div class="container rounded-lg shadow-md">
-                    <h1 class="text-4xl font-bold mb-5">Akses Diblokir</h1>
-                    <p class="text-lg mb-4">Maaf, halaman ini hanya dapat diakses melalui aplikasi ujian yang ditentukan (ExamBro).</p>
-                    <p class="text-lg">Silakan gunakan aplikasi yang benar untuk melanjutkan.</p>
-                </div>
-            `;
-            contentDiv.classList.remove('hidden'); // Menampilkan div konten
-        }
-
-        // Fungsi untuk menampilkan pesan "Sedang Mengalihkan"
-        function showRedirectMessage() {
-            const contentDiv = document.getElementById('content');
-            contentDiv.innerHTML = `
-                <div class="container redirect-message rounded-lg shadow-md">
-                    <h1 class="text-4xl font-bold mb-5">Sedang Mengalihkan...</h1>
-                    <p class="text-lg mb-4">Anda akan dialihkan ke halaman ujian dalam beberapa detik.</p>
-                    <p class="text-lg">Jika tidak dialihkan secara otomatis, silakan klik tautan ini: <a href="https://smp2pajangan.github.io/customlink" class="text-blue-600 hover:underline">Lanjut ke Halaman Ujian</a></p>
-                </div>
-            `;
-            contentDiv.classList.remove('hidden'); // Menampilkan div konten
-        }
-
-        // --- Logika "Deteksi" Sisi Klien (Sangat Tidak Andal) ---
-        // PENTING: Ini adalah SIMULASI. Deteksi aplikasi spesifik seperti ExamBro
-        // melalui User-Agent dari sisi klien TIDAK dapat diandalkan dan mudah dilewati.
-        // Untuk keamanan yang sebenarnya, diperlukan aplikasi ExamBro itu sendiri
-        // atau logika di sisi server.
-
-        const userAgent = navigator.userAgent;
-        // Anda perlu mengetahui string User-Agent yang dikirimkan oleh ExamBro.
-        // Sebagai contoh, kita akan mencari string "ExamBroApp".
-        // Jika ExamBro tidak memodifikasi User-Agent-nya, pemeriksaan ini akan gagal.
-        // Anda mungkin perlu mengganti "ExamBroApp" dengan bagian User-Agent yang sebenarnya dari ExamBro jika diketahui.
-        const isExamBro = userAgent.includes("ExamBroApp");
-
-        // Memeriksa apakah halaman dibuka oleh (simulasi) ExamBro
-        if (isExamBro) {
-            showRedirectMessage(); // Tampilkan pesan pengalihan
-            // Beri sedikit penundaan agar pesan terlihat sebelum dialihkan
-            setTimeout(() => {
-                window.location.replace("https://smp2pajangan.github.io/customlink");
-            }, 1000); // Pengalihan setelah 1 detik
-        } else {
-            showBlockedMessage(); // Tampilkan pesan akses diblokir
+        // Function untuk mengecek User Agent
+        function checkUserAgent() {
+            var userAgent = navigator.userAgent.toLowerCase();
+            // Mengecek apakah user menggunakan Exambro
+            if (userAgent.indexOf("exambro") === -1) {
+                // Jika bukan Exambro, tampilkan pesan akses diblokir
+                document.getElementById("message").innerHTML = "Akses diblokir! Halaman ini hanya bisa diakses dengan aplikasi Exambro.";
+            } else {
+                // Jika Exambro, redirect ke URL tujuan
+                window.location.href = "https://smp2pajangan.github.io/customlink";
+            }
         }
     </script>
-
+</head>
+<body onload="checkUserAgent()">
+    <h1>Menunggu Redirect...</h1>
+    <p id="message">Sedang memeriksa aplikasi yang digunakan...</p>
 </body>
 </html>
-
