@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deteksi WebView</title>
+    <title>Deteksi Browser Android</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -39,8 +39,9 @@
     </style>
 </head>
 <body>
-    <h1>Deteksi WebView di Aplikasi</h1>
-    <p>Halaman ini akan menampilkan User-Agent Anda saat ini dan memberikan tombol untuk menyalinnya. Kami juga akan mencoba mendeteksi apakah ini diakses melalui aplikasi berbasis WebView.</p>
+    <h1>Deteksi Browser Android</h1>
+    <p>Halaman ini akan menampilkan **User-Agent** Anda saat ini dan memberikan tombol untuk menyalinnya.</p>
+    <p>Jika Anda mengakses melalui **Chrome**, **Firefox**, atau browser lain di Android, halaman ini akan memberikan pesan terkait browser yang digunakan.</p>
 
     <!-- Display User-Agent -->
     <div id="userAgentDisplay"></div>
@@ -73,18 +74,25 @@
             alert("User-Agent telah disalin ke clipboard!");
         }
 
-        // Fungsi untuk mendeteksi apakah akses menggunakan WebView berbasis Chrome
-        function detectWebView() {
-            // Cek jika User-Agent mengandung "wv" yang menandakan WebView
-            if (userAgent.indexOf("wv") !== -1) {
-                alert("Halaman ini diakses menggunakan aplikasi berbasis WebView.");
+        // Fungsi untuk mendeteksi browser Android
+        function detectBrowser() {
+            if (userAgent.indexOf("Chrome") !== -1) {
+                if (userAgent.indexOf("Edg") !== -1) {
+                    alert("Browser yang Anda gunakan adalah **Microsoft Edge** di Android.");
+                } else {
+                    alert("Browser yang Anda gunakan adalah **Google Chrome** di Android.");
+                }
+            } else if (userAgent.indexOf("Firefox") !== -1) {
+                alert("Browser yang Anda gunakan adalah **Mozilla Firefox** di Android.");
+            } else if (userAgent.indexOf("Safari") !== -1) {
+                alert("Browser yang Anda gunakan adalah **Safari** di Android.");
             } else {
-                alert("Ini bukan aplikasi berbasis WebView.");
+                alert("Browser yang Anda gunakan tidak terdeteksi sebagai Chrome, Firefox, atau Safari.");
             }
         }
 
-        // Panggil fungsi untuk mendeteksi WebView
-        detectWebView();
+        // Panggil fungsi untuk mendeteksi browser Android
+        detectBrowser();
     </script>
 </body>
 </html>
