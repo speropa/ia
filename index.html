@@ -1,28 +1,41 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirect ke Custom Link</title>
-    <script>
-        // Fungsi untuk mendeteksi user-agent
-        function detectUserAgent() {
-            var userAgent = navigator.userAgent.toLowerCase();
-            // Cek apakah user-agent mengandung nama aplikasi tertentu
-            if (userAgent.indexOf("exambro") !== -1 && userAgent.indexOf("exam browser") !== -1) {
-                // Jika benar, redirect ke URL
-                window.location.href = "https://smp2pajangan.github.io/customlink";
-            } else {
-                // Jika bukan, tampilkan pesan akses ditolak
-                document.getElementById("message").innerHTML = "Akses ditolak. Halaman ini hanya dapat diakses menggunakan Exambro Exam Browser.";
-            }
-        }
-        
-        // Panggil fungsi saat halaman dimuat
-        window.onload = detectUserAgent;
-    </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Akses Ujian</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+      background-color: #f8f8f8;
+    }
+    .blocked {
+      color: red;
+      font-weight: bold;
+    }
+  </style>
+  <script>
+    // Gantilah string di bawah ini dengan User-Agent atau bagian dari User-Agent Exambro jika sudah diketahui
+    const allowedUserAgentPart = "exambro"; // contoh tebakannya
+    const userAgent = navigator.userAgent.toLowerCase();
+
+    window.onload = function () {
+      if (userAgent.includes(allowedUserAgentPart)) {
+        // Jika dibuka melalui aplikasi Exambro, redirect
+        window.location.href = "https://smp2pajangan.github.io/customlink";
+      } else {
+        // Jika dibuka di browser biasa, tampilkan pesan blokir
+        document.body.innerHTML = `
+          <h1 class="blocked">Akses Ditolak</h1>
+          <p>Silakan buka halaman ini melalui aplikasi ujian resmi.</p>
+        `;
+      }
+    };
+  </script>
 </head>
 <body>
-    <div id="message" style="text-align: center; padding: 50px; font-size: 20px; color: red;"></div>
+  <p>Mendeteksi perangkat...</p>
 </body>
 </html>
