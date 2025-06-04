@@ -5,21 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redirect ke Exambro</title>
     <script>
-        // Function untuk mengecek User Agent
-        function checkUserAgent() {
-            var userAgent = navigator.userAgent.toLowerCase();
-            // Mengecek apakah user menggunakan Exambro
-            if (userAgent.indexOf("exambro") === -1) {
-                // Jika bukan Exambro, tampilkan pesan akses diblokir
-                document.getElementById("message").innerHTML = "Akses diblokir! Halaman ini hanya bisa diakses dengan aplikasi Exambro.";
+        // Fungsi untuk mengecek apakah halaman dibuka di dalam aplikasi Exambro
+        function checkIfExambro() {
+            var userAgent = navigator.userAgent.toLowerCase();  // Ambil User-Agent dari browser
+            var params = new URLSearchParams(window.location.search);  // Ambil parameter URL
+
+            // Cek jika User-Agent milik Exambro atau ada parameter "source=exambro" di URL
+            if (userAgent.indexOf("exambro") !== -1 || (params.has("source") && params.get("source") === "exambro")) {
+                // Jika aplikasi Exambro ditemukan, lanjutkan redirect ke URL yang diinginkan
+                window.location.href = "https://smp2pajangan.github.io/customlink";  // Redirect ke halaman tujuan
             } else {
-                // Jika Exambro, redirect ke URL tujuan
-                window.location.href = "https://smp2pajangan.github.io/customlink";
+                // Jika tidak ditemukan, tampilkan pesan akses diblokir
+                document.getElementById("message").innerHTML = "Akses diblokir! Halaman ini hanya bisa diakses dengan aplikasi Exambro.";
             }
         }
     </script>
 </head>
-<body onload="checkUserAgent()">
+<body onload="checkIfExambro()">
     <h1>Menunggu Redirect...</h1>
     <p id="message">Sedang memeriksa aplikasi yang digunakan...</p>
 </body>
