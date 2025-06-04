@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deteksi User-Agent</title>
+    <title>Deteksi WebView</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -39,8 +39,8 @@
     </style>
 </head>
 <body>
-    <h1>Deteksi User-Agent Exambro</h1>
-    <p>Halaman ini akan menampilkan User-Agent Anda saat ini dan memberikan tombol untuk menyalinnya.</p>
+    <h1>Deteksi WebView di Aplikasi</h1>
+    <p>Halaman ini akan menampilkan User-Agent Anda saat ini dan memberikan tombol untuk menyalinnya. Kami juga akan mencoba mendeteksi apakah ini diakses melalui aplikasi berbasis WebView.</p>
 
     <!-- Display User-Agent -->
     <div id="userAgentDisplay"></div>
@@ -73,17 +73,18 @@
             alert("User-Agent telah disalin ke clipboard!");
         }
 
-        // Cek apakah User-Agent mencakup kata "Exambro" atau yang mirip
-        function detectExambro() {
-            if (userAgent.indexOf("Chrome") !== -1 && userAgent.indexOf("Android") !== -1) {
-                alert("User-Agent ini berasal dari aplikasi Exambro atau WebView berbasis Chrome!");
+        // Fungsi untuk mendeteksi apakah akses menggunakan WebView berbasis Chrome
+        function detectWebView() {
+            // Cek jika User-Agent mengandung "wv" yang menandakan WebView
+            if (userAgent.indexOf("wv") !== -1) {
+                alert("Halaman ini diakses menggunakan aplikasi berbasis WebView.");
             } else {
-                alert("Ini bukan User-Agent Exambro.");
+                alert("Ini bukan aplikasi berbasis WebView.");
             }
         }
 
-        // Panggil fungsi untuk deteksi Exambro
-        detectExambro();
+        // Panggil fungsi untuk mendeteksi WebView
+        detectWebView();
     </script>
 </body>
 </html>
