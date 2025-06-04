@@ -116,9 +116,8 @@
       width: 100%;
       height: 100%;
       background-color: rgba(0, 0, 0, 0.5); /* Overlay transparan */
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      justify-content: center; /* Gunakan flexbox untuk centering */
+      align-items: center; /* Gunakan flexbox untuk centering */
       z-index: 1000; /* Pastikan di atas elemen lain */
     }
 
@@ -173,14 +172,18 @@
     }
   </style>
   <script>
-    // Fungsi untuk mendeteksi apakah halaman dibuka di WebView Android
-    function isLikelyWebView() {
+    // Fungsi untuk mendeteksi apakah halaman dibuka di WebView Android atau Exambro
+    function isLikelyWebViewOrExambro() {
       const ua = navigator.userAgent || "";
       // Deteksi 'wv' di User Agent untuk Android WebView
       const isAndroidWebView = ua.includes("wv") || ua.includes("; wv") || ua.includes("version/4.0");
+      // Deteksi string khusus 'Exambro' yang mungkin ditambahkan oleh aplikasi Exam Browser
+      const isExambro = ua.includes("Exambro");
       // Pastikan bukan desktop (Windows/Mac) untuk mengurangi false positive
       const isNotDesktop = !ua.includes("windows") && !ua.includes("macintosh");
-      return isAndroidWebView && isNotDesktop;
+
+      // Jika terdeteksi sebagai WebView Android ATAU Exambro DAN bukan desktop
+      return (isAndroidWebView || isExambro) && isNotDesktop;
     }
 
     // Fungsi untuk menampilkan kotak pesan kustom
@@ -225,14 +228,14 @@
 
     // Jalankan logika saat halaman selesai dimuat
     window.onload = function () {
-      if (isLikelyWebView()) {
-        // Jika terdeteksi WebView, langsung arahkan ke URL
+      if (isLikelyWebViewOrExambro()) {
+        // Jika terdeteksi WebView atau Exambro, langsung arahkan ke URL
         window.location.href = "https://smp2pajangan.github.io/customlink";
       } else {
-        // Jika bukan WebView, tampilkan form password
+        // Jika bukan WebView atau Exambro, tampilkan form password
         document.body.innerHTML = `
           <h1 class="text-red-600">AKSES TERBATAS</h1>
-          <p class="text-gray-700">Untuk mengakses ujian ini di browser, Anda memerlukan password. Jika Anda pengguna Aplikasi <strong>Examdam</strong>, silakan gunakan aplikasi tersebut.</p>
+          <p class="text-gray-700">Untuk mengakses ujian ini di browser, Anda memerlukan password. Jika Anda pengguna Aplikasi <strong>Examdam</strong> atau <strong>Exambro</strong>, silakan gunakan aplikasi tersebut.</p>
           <div class="password-container">
             <label for="passwordInput">Masukkan Password:</label>
             <input type="password" id="passwordInput" placeholder="Password">
