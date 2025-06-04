@@ -1,41 +1,19 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Akses Ujian</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 50px;
-      background-color: #f8f8f8;
-    }
-    .blocked {
-      color: red;
-      font-weight: bold;
-    }
-  </style>
-  <script>
-    // Gantilah string di bawah ini dengan User-Agent atau bagian dari User-Agent Exambro jika sudah diketahui
-    const allowedUserAgentPart = "exambrowser"; // contoh tebakannya
-    const userAgent = navigator.userAgent.toLowerCase();
-
-    window.onload = function () {
-      if (userAgent.includes(allowedUserAgentPart)) {
-        // Jika dibuka melalui aplikasi Exambro, redirect
-        window.location.href = "https://smp2pajangan.github.io/customlink";
-      } else {
-        // Jika dibuka di browser biasa, tampilkan pesan blokir
-        document.body.innerHTML = `
-          <h1 class="blocked">Akses Ditolak</h1>
-          <p>Silakan buka halaman ini melalui aplikasi ujian resmi.</p>
-        `;
-      }
-    };
-  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peringatan Sederhana</title>
 </head>
 <body>
-  <p>Mendeteksi perangkat...</p>
+
+    <h1>Selamat Datang!</h1>
+    <p>Ini adalah halaman web sederhana yang menampilkan peringatan.</p>
+
+    <script>
+        // Kode JavaScript untuk menampilkan peringatan
+        window.alert("Halo! Selamat datang di halaman ini.");
+    </script>
+
 </body>
 </html>
