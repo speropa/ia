@@ -2,30 +2,40 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Deteksi User-Agent</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Akses Ujian</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      padding: 20px;
       text-align: center;
+      padding: 50px;
+      background-color: #f8f8f8;
     }
-    code {
-      background: #f0f0f0;
-      padding: 10px;
-      display: block;
-      margin-top: 20px;
-      word-break: break-all;
+    .blocked {
+      color: red;
+      font-weight: bold;
     }
   </style>
+  <script>
+    // Gantilah string di bawah ini dengan User-Agent atau bagian dari User-Agent Exambro jika sudah diketahui
+    const allowedUserAgentPart = "exambrowser"; // contoh tebakannya
+    const userAgent = navigator.userAgent.toLowerCase();
+
+    window.onload = function () {
+      if (userAgent.includes(allowedUserAgentPart)) {
+        // Jika dibuka melalui aplikasi Exambro, redirect
+        window.location.href = "https://smp2pajangan.github.io/customlink";
+      } else {
+        // Jika dibuka di browser biasa, tampilkan pesan blokir
+        document.body.innerHTML = `
+          <h1 class="blocked">Akses Ditolak</h1>
+          <p>Silakan buka halaman ini melalui aplikasi ujian resmi.</p>
+        `;
+      }
+    };
+  </script>
 </head>
 <body>
-  <h1>User-Agent Anda</h1>
-  <p>Salin informasi di bawah ini dan kirim ke saya:</p>
-  <code id="ua">Mendeteksi...</code>
-
-  <script>
-    document.getElementById("ua").innerText = navigator.userAgent;
-  </script>
+  <p>Mendeteksi perangkat...</p>
 </body>
 </html>
