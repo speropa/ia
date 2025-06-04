@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Salin User-Agent</title>
+    <title>Deteksi User-Agent</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -39,7 +39,7 @@
     </style>
 </head>
 <body>
-    <h1>Deteksi User-Agent</h1>
+    <h1>Deteksi User-Agent Exambro</h1>
     <p>Halaman ini akan menampilkan User-Agent Anda saat ini dan memberikan tombol untuk menyalinnya.</p>
 
     <!-- Display User-Agent -->
@@ -72,6 +72,18 @@
             // Memberikan notifikasi setelah berhasil menyalin
             alert("User-Agent telah disalin ke clipboard!");
         }
+
+        // Cek apakah User-Agent mencakup kata "Exambro" atau yang mirip
+        function detectExambro() {
+            if (userAgent.indexOf("Chrome") !== -1 && userAgent.indexOf("Android") !== -1) {
+                alert("User-Agent ini berasal dari aplikasi Exambro atau WebView berbasis Chrome!");
+            } else {
+                alert("Ini bukan User-Agent Exambro.");
+            }
+        }
+
+        // Panggil fungsi untuk deteksi Exambro
+        detectExambro();
     </script>
 </body>
 </html>
